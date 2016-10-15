@@ -1,0 +1,25 @@
+{
+  "name": "gulp-mochelec",
+  "version": "0.0.0",
+  "description": "Gulp plugin for running Mocha unit tests in Electron",
+  "author": "Harri Kovalainen <hakovala@gmail.com>",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "dependencies": {
+    "gulp-util": "^3.0.7",
+    "object-to-spawn-args": "^1.1.0",
+    "through2": "^2.0.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "mocha": "^3.1.2"
+  },
+  "keywords": [
+    "gulp",
+    "mocha",
+    "electron"
+  ],
+  "license": "MIT"
+}
