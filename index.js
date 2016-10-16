@@ -54,7 +54,8 @@ module.exports = function(mochelecOpts, opts)  {
 		child.on('exit', stream.emit.bind(stream, 'mochelecExit'));
 
 		child.on('error', (err) => {
-			cb(new gutil.PluginError(err.message));
+			debug('error: %s', err.message);
+			cb(gulpError(err.message));
 		});
 		child.on('exit', (code) => {
 			let err;
