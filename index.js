@@ -58,9 +58,11 @@ module.exports = function(mochelecOpts, opts)  {
 			cb(gulpError(err.message));
 		});
 		child.on('exit', (code) => {
+			debug('exit: %d', code);
 			let err;
 			if (code !== 0 && !opts.silent) {
-				err = gulpError('Tests failed, failed count: ' + code);
+				err = gulpError(code + ' tests failed');
+				err.count = code;
 			}
 			cb(err);
 		});
