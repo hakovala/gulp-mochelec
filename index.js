@@ -70,7 +70,8 @@ module.exports = function(mochelecOpts, opts)  {
 		});
 	}
 
-	return through.obj(collectTests, function(cb) {
+	return through({ objectMode: true }, collectTests, function(cb) {
+		debug('flush');
 		runTests(files, this, (err) => {
 			if (err) return cb(err);
 			this.push(files);
