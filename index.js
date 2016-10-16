@@ -29,13 +29,15 @@ module.exports = function(mochelecOpts, opts)  {
 
 	// collect test files to run them in a batch
 	function collectTests(file, enc, cb) {
-		files.push(file.path);
+		debug('file: %s', file);
+		files.push(file);
 		cb();
 	}
 
 	function runTests(files, stream, cb) {
 		debug('test files: %o', files);
-		let child = spawn(NODE_BIN, args.concat(files), { env: process.env });
+		let file_paths = files.map((file) => file.path);
+		let child = spawn(NODE_BIN, args.concat(file_paths), { env: process.env });
 
 		if (!opts.suppressStdout) {
 			child.stdout.pipe(process.stdout);
