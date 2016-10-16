@@ -6,25 +6,25 @@ const path = require('path');
 const gutil = require('gulp-util');
 const through = require('through2');
 const toSpawnArgs = require('object-to-spawn-args');
-const mochaElectron = require('mocha-electron');
-
-const debug = require('debug')('gulp-mocha-electron');
+const mochelec = require('mochelec');
 
 const pluginName = require('./package.json').name;
 const NODE_BIN = process.argv[0];
+
+const debug = require('debug')(pluginName);
 
 function gulpError(msg) {
 	return new gutil.PluginError(pluginName, msg);
 }
 
-module.exports = function(mochaElectronOpts, opts)  {
+module.exports = function(mochelecOpts, opts)  {
 	opts = opts || {};
-	mochaElectronOpts = mochaElectronOpts || {};
+	mochelecOpts = mochelecOpts || {};
 
 	debug('opts: %o', opts);
-	debug('mochaElectronOpts: %o', mochaElectronOpts);
+	debug('mochelecOpts: %o', mochelecOpts);
 
-	let args = [mochaElectron].concat(toSpawnArgs(mochaElectronOpts));
+	let args = [mochelec].concat(toSpawnArgs(mochelecOpts));
 	let files = [];
 
 	// collect test files to run them in a batch
@@ -44,14 +44,14 @@ module.exports = function(mochaElectronOpts, opts)  {
 			child.stderr.pipe(process.stderr);
 		}
 
-		child.stdout.on('data', stream.emit.bind(stream, 'mochaElectronStdoutData'));
-		child.stdout.on('end', stream.emit.bind(stream, 'mochaElectronStdoutEnd'));
+		child.stdout.on('data', stream.emit.bind(stream, 'mochelecStdoutData'));
+		child.stdout.on('end', stream.emit.bind(stream, 'mochelecStdoutEnd'));
 
-		child.stderr.on('data', stream.emit.bind(stream, 'mochaElectronStderrData'));
-		child.stderr.on('end', stream.emit.bind(stream, 'mochaElectronStderrEnd'));
+		child.stderr.on('data', stream.emit.bind(stream, 'mochelecStderrData'));
+		child.stderr.on('end', stream.emit.bind(stream, 'mochelecStderrEnd'));
 
-		child.on('error', stream.emit.bind(stream, 'mochaElectronError'));
-		child.on('exit', stream.emit.bind(stream, 'mochaElectronExit'));
+		child.on('error', stream.emit.bind(stream, 'mochelecError'));
+		child.on('exit', stream.emit.bind(stream, 'mochelecExit'));
 
 		child.on('error', (err) => {
 			cb(new gutil.PluginError(err.message));
