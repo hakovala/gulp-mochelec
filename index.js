@@ -13,8 +13,8 @@ const NODE_BIN = process.argv[0];
 
 const debug = require('debug')(pluginName);
 
-function gulpError(msg) {
-	return new gutil.PluginError(pluginName, msg);
+function gulpError(msg, opt) {
+	return new gutil.PluginError(pluginName, msg, opt);
 }
 
 module.exports = function(mochelecOpts, opts)  {
